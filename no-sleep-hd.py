@@ -12,6 +12,10 @@
 # C2 http://stackoverflow.com/questions/911856/detecting-idle-time-using-python
 # C3 http://code.activestate.com/recipes/475157-disk-dumper/
 # C4 http://stackoverflow.com/questions/2398661/schedule-a-repeating-event-in-python-3
+# 
+# Updated to Python 3 by:
+#   spiralofhope
+
 
 import os
 import sched
@@ -22,7 +26,7 @@ import string
 import datetime
 import platform
 
-EXT_DRIVE_NAME = "G"
+EXT_DRIVE_NAME = "Z"
 PERIOD_SECS = 90
 
 # C4: Schedule a function to run periodically
