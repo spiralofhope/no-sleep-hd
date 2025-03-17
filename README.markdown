@@ -1,5 +1,19 @@
-Periodic read random sectors from hard drive. 
+Keep a hard drive from going to sleep.
 
-Keep external HD from going into sleep mode.
+This uses the brute-force method of periodically reading random sectors.
 
-To change drive letter, You have to manually edit the source code.
+To change the drive letter and timing, manually edit the source code.
+
+Run with
+
+```bash
+python no-sleep-hd.py
+```
+
+Tested 2025-03-17 with Python 3.9.2 on Windows 11 with Windows Subsystem for Linux.
+
+I have not tested these:
+
+- `create-py2exe.bat`
+- `setup.py`
+
