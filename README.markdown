@@ -18,17 +18,6 @@ PERIOD_SECS = 90
 ```
 
 
-# Advanced users - run it directly under Windows Subsystem for Linux 2
-
-Tested 2025-03-17 with Python 3.9.2 on Windows 11 with Windows Subsystem for Linux (Debian):
-
-- You can run it directly without compilation:
-  - This assumes you have its dependencies (it will explode and give hints if you do not).
-
-```bash
-python no-sleep-hd.py
-```
-
 
 # Setup / Compilation
 
