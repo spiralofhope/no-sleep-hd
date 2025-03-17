@@ -4,6 +4,8 @@ REM Clean up files that might have been created by create-py2exe.bat or create-p
 
 
 
+CD /D "%~dp0"
+
 del /F /Q "_bz2.pyd"
 del /F /Q "_ctypes.pyd"
 del /F /Q "_hashlib.pyd"

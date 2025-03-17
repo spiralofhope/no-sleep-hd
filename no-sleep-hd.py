@@ -16,7 +16,6 @@
 # Updated to Python 3 by:
 #   spiralofhope
 
-
 import os
 import sched
 import time
@@ -25,24 +24,24 @@ import re
 import string
 import datetime
 import platform
+import itertools
+import sys
+import threading
 
-EXT_DRIVE_NAME = "Z"
+EXT_DRIVE_NAME = "B"
 PERIOD_SECS = 90
 
-# C4: Schedule a function to run periodically
 def periodic(scheduler, interval, action, actionargs=()):
     scheduler.enter(interval, 1, periodic,
                     (scheduler, interval, action, actionargs))
     action(*actionargs)
 
-# C1: Define printable characters and escape non-printable ones
 printable = string.ascii_letters + string.digits + string.punctuation + ' '
 
 def hex_escape(b):
     s = b.decode('latin1')
     return ''.join(c if c in printable else '-' for c in s)
 
-# C2: Get system idle duration (cross-platform)
 if platform.system() == 'Windows':
     from ctypes import Structure, windll, c_uint, sizeof, byref
     class LASTINPUTINFO(Structure):
@@ -59,13 +58,12 @@ if platform.system() == 'Windows':
         return millis / 1000.0
 else:
     def get_idle_duration():
-        # For non-Windows systems, return a default value or implement alternative
         return 0.0
 
-# C3: Read a random sector from the specified drive
 def raw_read(drive):
     start = random.randrange(0, 1000) * 512
-    print(start)
+    sys.stdout.write(f'\r    Read sector: {start}')
+    sys.stdout.flush()
     if os.name == 'posix':
         with open('/dev/' + drive, 'rb') as f:
             f.seek(start)
@@ -74,23 +72,26 @@ def raw_read(drive):
         with open(r'\\.\%s:' % drive, 'rb') as f:
             f.seek(start)
             temp = f.read(512)
-    print(hex_escape(temp))
 
-# Main function to check conditions and trigger raw_read
+def spinner():
+    spinner_chars = itertools.cycle(['|', '/', '-', '\\'])
+    while True:
+        sys.stdout.write(f'\r{next(spinner_chars)}')
+        sys.stdout.flush()
+        time.sleep(1)
+
 def do_wait_up():
-    print("From do_wait_up", time.time())
     idle = get_idle_duration()
     h = datetime.datetime.now().hour
     if idle < 600 and 10 <= h <= 19:
         raw_read(EXT_DRIVE_NAME)
 
-# Set up and run the scheduler
 s = sched.scheduler(time.time, time.sleep)
 
 def no_sleep_hd():
+    threading.Thread(target=spinner, daemon=True).start()
     periodic(s, PERIOD_SECS, do_wait_up, ())
     s.run()
 
-# Start the script
-no_sleep_hd()
-
+if __name__ == '__main__':
+    no_sleep_hd()

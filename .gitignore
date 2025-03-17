@@ -1,3 +1,43 @@
+dist/**
+!dist/no-sleep-hd.bat
+!dist/cleanup.bat
+!dist/cleanup.sh
+
+
+# I like to compile targeting different directories:
+A/**
+B/**
+C/**
+D/**
+E/**
+F/**
+G/**
+H/**
+I/**
+J/**
+K/**
+L/**
+M/**
+N/**
+A/**
+O/**
+P/**
+Q/**
+R/**
+S/**
+T/**
+U/**
+V/**
+W/**
+X/**
+Y/**
+
+
+
+# 
+# The original authors had this.  I'll keep it because I don't understand it.
+#
+
 *.class
 classes/
 
@@ -33,5 +73,5 @@ local.properties
 # PDT-specific
 .buildpath
 
+
 build/**
-dist/**
